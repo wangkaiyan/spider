@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spider.dao.MsgDao">
+    <resultMap id="BaseResultMap" type="com.spider.Msg">
+    <id column="id" property="id" jdbcType="VARCHAR"/>
+    <result column="category" property="category" jdbcType="VARCHAR"/>
+    <result column="channel" property="channel" jdbcType="VARCHAR"/>
+    <result column="collect_times" property="collect_times" jdbcType="BIGINT"/>
+    <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    <result column="doc_id" property="doc_id" jdbcType="VARCHAR"/>
+    <result column="doc_url" property="doc_url" jdbcType="VARCHAR"/>
+    <result column="guess_like" property="guess_like" jdbcType="VARCHAR"/>
+    <result column="insert_time" property="insert_time" jdbcType="BIGINT"/>
+    <result column="keywords" property="keywords" jdbcType="VARCHAR"/>
+    <result column="publish_time" property="publish_time" jdbcType="BIGINT"/>
+    <result column="source" property="source" jdbcType="VARCHAR"/>
+    <result column="summary" property="summary" jdbcType="VARCHAR"/>
+    <result column="title" property="title" jdbcType="VARCHAR"/>
+</resultMap>
+
+    <sql id="base_column_list">
+    id,category,channel,collect_times,content,doc_id,doc_url,guess_like,insert_time,keywords,publish_time,source,summary,title
+</sql>
+
+    <sql id="order_by_sql">
+        <if test="orderColumn != null and orderSort != null">
+            ORDER BY ${orderColumn} ${orderSort}
+        </if>
+
+        <if test="orderColumn == null or orderSort == null">
+            ORDER BY id DESC
+        </if>
+    </sql>
+
+    <sql id="base_where_condition">
+        <where>
+            <if test="id != null and id != '' ">
+                AND id = #{id}
+            </if>
+            <if test="category != null and category != '' ">
+                AND category = #{category}
+            </if>
+            <if test="channel != null and channel != '' ">
+                AND channel = #{channel}
+            </if>
+            <if test="collect_times != null and collect_times != '' ">
+                AND collect_times = #{collect_times}
+            </if>
+            <if test="content != null and content != '' ">
+                AND content = #{content}
+            </if>
+            <if test="doc_id != null and doc_id != '' ">
+                AND doc_id = #{doc_id}
+            </if>
+            <if test="doc_url != null and doc_url != '' ">
+                AND doc_url = #{doc_url}
+            </if>
+            <if test="guess_like != null and guess_like != '' ">
+                AND guess_like = #{guess_like}
+            </if>
+            <if test="insert_time != null and insert_time != '' ">
+                AND insert_time = #{insert_time}
+            </if>
+            <if test="keywords != null and keywords != '' ">
+                AND keywords = #{keywords}
+            </if>
+            <if test="publish_time != null and publish_time != '' ">
+                AND publish_time = #{publish_time}
+            </if>
+            <if test="source != null and source != '' ">
+                AND source = #{source}
+            </if>
+            <if test="summary != null and summary != '' ">
+                AND summary = #{summary}
+            </if>
+            <if test="title != null and title != '' ">
+                AND title = #{title}
+            </if>
+            <!--<if test="isDel == null">
+                AND is_del = 0
+            </if>-->
+            <if test="ids != null">
+                <foreach collection="ids" index="index" item="id" open=" AND id IN (" separator="," close=")">
+                #{id,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="magicList != null">
+                <![CDATA[ AND  ${magicColumn}  in ]]>
+                <foreach collection="magicList" index="index" item="magicValue" open=" (" separator="," close=")">
+                #{magicValue}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+
+    <insert id="insert" keyProperty="id"
+            parameterType="com.spider.Msg">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT replace(uuid(),'-','') AS id
+        </selectKey>
+        INSERT INTO `msg` (id, category,channel,collect_times,content,doc_id,doc_url,guess_like,insert_time,keywords,publish_time,source,summary,title)
+        VALUES (#{id,jdbcType=VARCHAR},
+                #{category},
+                #{channel},
+                #{collect_times},
+                #{content},
+                #{doc_id},
+                #{doc_url},
+                #{guess_like},
+                #{insert_time},
+                #{keywords},
+                #{publish_time},
+                #{source},
+                #{summary},
+                #{title}
+    )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO `msg` (id, category,channel,collect_times,content,doc_id,doc_url,guess_like,insert_time,keywords,publish_time,source,summary,title)
+        VALUES
+        <if test="list != null">
+            <foreach collection="list" item="item" index="index" separator=",">
+                (
+                    replace(uuid(), '-', ''),
+                    #{item.category},
+                    #{item.channel},
+                    #{item.collect_times},
+                    #{item.content},
+                    #{item.doc_id},
+                    #{item.doc_url},
+                    #{item.guess_like},
+                    #{item.insert_time},
+                    #{item.keywords},
+                    #{item.publish_time},
+                    #{item.source},
+                    #{item.summary},
+                    #{item.title}
+                )
+            </foreach>
+        </if>
+    </insert>
+
+    <insert id="insertSelective" keyProperty="id"
+            parameterType="com.spider.Msg">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT replace(uuid(),'-','') AS id
+        </selectKey>
+
+        INSERT INTO `msg`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="category != null">
+            category,
+            </if>
+            <if test="channel != null">
+            channel,
+            </if>
+            <if test="collect_times != null">
+            collect_times,
+            </if>
+            <if test="content != null">
+            content,
+            </if>
+            <if test="doc_id != null">
+            doc_id,
+            </if>
+            <if test="doc_url != null">
+            doc_url,
+            </if>
+            <if test="guess_like != null">
+            guess_like,
+            </if>
+            <if test="insert_time != null">
+            insert_time,
+            </if>
+            <if test="keywords != null">
+            keywords,
+            </if>
+            <if test="publish_time != null">
+            publish_time,
+            </if>
+            <if test="source != null">
+            source,
+            </if>
+            <if test="summary != null">
+            summary,
+            </if>
+            <if test="title != null">
+            title
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+        #{id,jdbcType=VARCHAR},
+            <if test="category != null">
+            #{category},
+            </if>
+            <if test="channel != null">
+            #{channel},
+            </if>
+            <if test="collect_times != null">
+            #{collect_times},
+            </if>
+            <if test="content != null">
+            #{content},
+            </if>
+            <if test="doc_id != null">
+            #{doc_id},
+            </if>
+            <if test="doc_url != null">
+            #{doc_url},
+            </if>
+            <if test="guess_like != null">
+            #{guess_like},
+            </if>
+            <if test="insert_time != null">
+            #{insert_time},
+            </if>
+            <if test="keywords != null">
+            #{keywords},
+            </if>
+            <if test="publish_time != null">
+            #{publish_time},
+            </if>
+            <if test="source != null">
+            #{source},
+            </if>
+            <if test="summary != null">
+            #{summary},
+            </if>
+            <if test="title != null">
+            #{title}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM `msg`
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectBatchByPrimaryKey" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM `msg`
+        <include refid="base_where_condition"/>
+    </select>
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.spider.Msg">
+        UPDATE `msg`
+        <set>
+            <if test="category != null">
+            category = #{category},
+            </if>
+            <if test="channel != null">
+            channel = #{channel},
+            </if>
+            <if test="collect_times != null">
+            collect_times = #{collect_times},
+            </if>
+            <if test="content != null">
+            content = #{content},
+            </if>
+            <if test="doc_id != null">
+            doc_id = #{doc_id},
+            </if>
+            <if test="doc_url != null">
+            doc_url = #{doc_url},
+            </if>
+            <if test="guess_like != null">
+            guess_like = #{guess_like},
+            </if>
+            <if test="insert_time != null">
+            insert_time = #{insert_time},
+            </if>
+            <if test="keywords != null">
+            keywords = #{keywords},
+            </if>
+            <if test="publish_time != null">
+            publish_time = #{publish_time},
+            </if>
+            <if test="source != null">
+            source = #{source},
+            </if>
+            <if test="summary != null">
+            summary = #{summary},
+            </if>
+            <if test="title != null">
+            title = #{title}
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.spider.Msg">
+        UPDATE `msg`
+        SET
+        category = #{category},
+        channel = #{channel},
+        collect_times = #{collect_times},
+        content = #{content},
+        doc_id = #{doc_id},
+        doc_url = #{doc_url},
+        guess_like = #{guess_like},
+        insert_time = #{insert_time},
+        keywords = #{keywords},
+        publish_time = #{publish_time},
+        source = #{source},
+        summary = #{summary},
+        title = #{title}
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByParams" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        SELECT
+       <!-- <include refid="base_column_list"/>-->
+        id,category,channel,summary,title,doc_url
+        FROM `msg`
+        <include refid="base_where_condition"/>
+        <include refid="order_by_sql"/>
+        <if test="offset != null and size != null">
+             LIMIT #{offset}, #{size}
+        </if>
+    </select>
+
+    <select id="countByParams" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        SELECT
+        COUNT(DISTINCT id)
+        FROM `msg`
+        <include refid="base_where_condition"/>
+    </select>
+
+    <select id="selectFirstByParams" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM `msg`
+        <include refid="base_where_condition"/>
+        <include refid="order_by_sql"/>
+        LIMIT 1
+    </select>
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.String">
+        UPDATE `msg`
+        SET is_del = 1
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="deleteBatchByPrimaryKey" parameterType="java.util.List">
+        UPDATE `msg`
+        SET is_del = 1
+        WHERE
+        <if test="ids != null">
+            <foreach collection="ids" index="index" item="id" open=" id IN (" separator="," close=")">
+            #{id,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </update>
+</mapper>

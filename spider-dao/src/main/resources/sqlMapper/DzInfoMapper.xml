@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spider.dao.DzInfoDAO">
+    <resultMap id="BaseResultMap" type="com.spider.DzInfo">
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="catid" property="catid" jdbcType="INTEGER"/>
+            <result column="typeid" property="typeid" jdbcType="INTEGER"/>
+            <result column="title" property="title" jdbcType="CHAR"/>
+            <result column="style" property="style" jdbcType="CHAR"/>
+            <result column="thumb" property="thumb" jdbcType="CHAR"/>
+            <result column="keywords" property="keywords" jdbcType="CHAR"/>
+            <result column="description" property="description" jdbcType="CHAR"/>
+            <result column="posids" property="posids" jdbcType="BIT"/>
+            <result column="url" property="url" jdbcType="CHAR"/>
+            <result column="listorder" property="listorder" jdbcType="INTEGER"/>
+            <result column="status" property="status" jdbcType="INTEGER"/>
+            <result column="sysadd" property="sysadd" jdbcType="BIT"/>
+            <result column="islink" property="islink" jdbcType="BIT"/>
+            <result column="username" property="username" jdbcType="CHAR"/>
+            <result column="inputtime" property="inputtime" jdbcType="INTEGER"/>
+            <result column="updatetime" property="updatetime" jdbcType="INTEGER"/>
+            <result column="type_1" property="type1" jdbcType="VARCHAR"/>
+            <result column="type_2" property="type2" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+    id,catid,typeid,title,style,thumb,keywords,description,posids,url,listorder,status,sysadd,islink,username,inputtime,updatetime,type_1,type_2
+    </sql>
+
+    <sql id="order_by_sql">
+        <if test="orderColumn != null and orderSort != null">
+            ORDER BY ${orderColumn} ${orderSort}
+        </if>
+
+        <if test="orderColumn == null or orderSort == null">
+            ORDER BY id DESC
+        </if>
+    </sql>
+
+    <sql id="base_where_condition">
+        <where>
+            <if test="id != null and id != '' ">
+                AND id = #{id}
+            </if>
+            <if test="catid != null and catid != '' ">
+                AND catid = #{catid}
+            </if>
+            <if test="typeid != null and typeid != '' ">
+                AND typeid = #{typeid}
+            </if>
+            <if test="title != null and title != '' ">
+                AND title = #{title}
+            </if>
+            <if test="style != null and style != '' ">
+                AND style = #{style}
+            </if>
+            <if test="thumb != null and thumb != '' ">
+                AND thumb = #{thumb}
+            </if>
+            <if test="keywords != null and keywords != '' ">
+                AND keywords = #{keywords}
+            </if>
+            <if test="description != null and description != '' ">
+                AND description = #{description}
+            </if>
+            <if test="posids != null and posids != '' ">
+                AND posids = #{posids}
+            </if>
+            <if test="url != null and url != '' ">
+                AND url = #{url}
+            </if>
+            <if test="listorder != null and listorder != '' ">
+                AND listorder = #{listorder}
+            </if>
+            <if test="status != null and status != '' ">
+                AND status = #{status}
+            </if>
+            <if test="sysadd != null and sysadd != '' ">
+                AND sysadd = #{sysadd}
+            </if>
+            <if test="islink != null and islink != '' ">
+                AND islink = #{islink}
+            </if>
+            <if test="username != null and username != '' ">
+                AND username = #{username}
+            </if>
+            <if test="inputtime != null and inputtime != '' ">
+                AND inputtime = #{inputtime}
+            </if>
+            <if test="updatetime != null and updatetime != '' ">
+                AND updatetime = #{updatetime}
+            </if>
+            <if test="type1 != null and type1 != '' ">
+                AND type_1 = #{type1}
+            </if>
+            <if test="type2 != null and type2 != '' ">
+                AND type_2 = #{type2}
+            </if>
+            <!--<if test="isDel == null">
+                AND is_del = 0
+            </if>-->
+            <if test="ids != null">
+                <foreach collection="ids" index="index" item="id" open=" AND id IN (" separator="," close=")">
+                #{id,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="magicList != null">
+                <![CDATA[ AND  ${magicColumn}  in ]]>
+                <foreach collection="magicList" index="index" item="magicValue" open=" (" separator="," close=")">
+                #{magicValue}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+
+    <insert id="insert" keyProperty="id"
+            parameterType="com.spider.DzInfo">
+        INSERT INTO `dz_info` (catid,typeid,title,style,thumb,keywords,description,posids,url,listorder,status,sysadd,islink,username,inputtime,updatetime,type_1,type_2)
+        VALUES (#{catid},
+                #{typeid},
+                #{title},
+                #{style},
+                #{thumb},
+                #{keywords},
+                #{description},
+                #{posids},
+                #{url},
+                #{listorder},
+                #{status},
+                #{sysadd},
+                #{islink},
+                #{username},
+                #{inputtime},
+                #{updatetime},
+                #{type1},
+                #{type2}
+    )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO `dz_info` (id, catid,typeid,title,style,thumb,keywords,description,posids,url,listorder,status,sysadd,islink,username,inputtime,updatetime,type_1,type_2)
+        VALUES
+        <if test="list != null">
+            <foreach collection="list" item="item" index="index" separator=",">
+                (
+                    replace(uuid(), '-', ''),
+                    #{item.catid},
+                    #{item.typeid},
+                    #{item.title},
+                    #{item.style},
+                    #{item.thumb},
+                    #{item.keywords},
+                    #{item.description},
+                    #{item.posids},
+                    #{item.url},
+                    #{item.listorder},
+                    #{item.status},
+                    #{item.sysadd},
+                    #{item.islink},
+                    #{item.username},
+                    #{item.inputtime},
+                    #{item.updatetime},
+                    #{item.type1},
+                    #{item.type2}
+                )
+            </foreach>
+        </if>
+    </insert>
+
+    <insert id="insertSelective" keyProperty="id"
+            parameterType="com.spider.DzInfo">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT replace(uuid(),'-','') AS id
+        </selectKey>
+
+        INSERT INTO `dz_info`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="catid != null">
+            catid,
+            </if>
+            <if test="typeid != null">
+            typeid,
+            </if>
+            <if test="title != null">
+            title,
+            </if>
+            <if test="style != null">
+            style,
+            </if>
+            <if test="thumb != null">
+            thumb,
+            </if>
+            <if test="keywords != null">
+            keywords,
+            </if>
+            <if test="description != null">
+            description,
+            </if>
+            <if test="posids != null">
+            posids,
+            </if>
+            <if test="url != null">
+            url,
+            </if>
+            <if test="listorder != null">
+            listorder,
+            </if>
+            <if test="status != null">
+            status,
+            </if>
+            <if test="sysadd != null">
+            sysadd,
+            </if>
+            <if test="islink != null">
+            islink,
+            </if>
+            <if test="username != null">
+            username,
+            </if>
+            <if test="inputtime != null">
+            inputtime,
+            </if>
+            <if test="updatetime != null">
+            updatetime,
+            </if>
+            <if test="type1 != null">
+            type_1,
+            </if>
+            <if test="type2 != null">
+            type_2
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+        #{id,jdbcType=VARCHAR},
+            <if test="catid != null">
+            #{catid},
+            </if>
+            <if test="typeid != null">
+            #{typeid},
+            </if>
+            <if test="title != null">
+            #{title},
+            </if>
+            <if test="style != null">
+            #{style},
+            </if>
+            <if test="thumb != null">
+            #{thumb},
+            </if>
+            <if test="keywords != null">
+            #{keywords},
+            </if>
+            <if test="description != null">
+            #{description},
+            </if>
+            <if test="posids != null">
+            #{posids},
+            </if>
+            <if test="url != null">
+            #{url},
+            </if>
+            <if test="listorder != null">
+            #{listorder},
+            </if>
+            <if test="status != null">
+            #{status},
+            </if>
+            <if test="sysadd != null">
+            #{sysadd},
+            </if>
+            <if test="islink != null">
+            #{islink},
+            </if>
+            <if test="username != null">
+            #{username},
+            </if>
+            <if test="inputtime != null">
+            #{inputtime},
+            </if>
+            <if test="updatetime != null">
+            #{updatetime},
+            </if>
+            <if test="type1 != null">
+            #{type1},
+            </if>
+            <if test="type2 != null">
+            #{type2}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM `dz_info`
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectBatchByPrimaryKey" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM `dz_info`
+        <include refid="base_where_condition"/>
+    </select>
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.spider.DzInfo">
+        UPDATE `dz_info`
+        <set>
+            <if test="catid != null">
+            catid = #{catid},
+            </if>
+            <if test="typeid != null">
+            typeid = #{typeid},
+            </if>
+            <if test="title != null">
+            title = #{title},
+            </if>
+            <if test="style != null">
+            style = #{style},
+            </if>
+            <if test="thumb != null">
+            thumb = #{thumb},
+            </if>
+            <if test="keywords != null">
+            keywords = #{keywords},
+            </if>
+            <if test="description != null">
+            description = #{description},
+            </if>
+            <if test="posids != null">
+            posids = #{posids},
+            </if>
+            <if test="url != null">
+            url = #{url},
+            </if>
+            <if test="listorder != null">
+            listorder = #{listorder},
+            </if>
+            <if test="status != null">
+            status = #{status},
+            </if>
+            <if test="sysadd != null">
+            sysadd = #{sysadd},
+            </if>
+            <if test="islink != null">
+            islink = #{islink},
+            </if>
+            <if test="username != null">
+            username = #{username},
+            </if>
+            <if test="inputtime != null">
+            inputtime = #{inputtime},
+            </if>
+            <if test="updatetime != null">
+            updatetime = #{updatetime},
+            </if>
+            <if test="type1 != null">
+            type_1 = #{type1},
+            </if>
+            <if test="type2 != null">
+            type_2 = #{type2}
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.spider.DzInfo">
+        UPDATE `dz_info`
+        SET
+        catid = #{catid},
+        typeid = #{typeid},
+        title = #{title},
+        style = #{style},
+        thumb = #{thumb},
+        keywords = #{keywords},
+        description = #{description},
+        posids = #{posids},
+        url = #{url},
+        listorder = #{listorder},
+        status = #{status},
+        sysadd = #{sysadd},
+        islink = #{islink},
+        username = #{username},
+        inputtime = #{inputtime},
+        updatetime = #{updatetime},
+        type_1 = #{type1},
+        type_2 = #{type2}
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByParams" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM `dz_info`
+        <include refid="base_where_condition"/>
+        <include refid="order_by_sql"/>
+        <if test="offset != null and size != null">
+            LIMIT #{offset}, #{size}
+        </if>
+    </select>
+
+    <select id="countByParams" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        SELECT
+        COUNT( id)
+        FROM `dz_info`
+        <include refid="base_where_condition"/>
+    </select>
+
+    <select id="selectFirstByParams" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM `dz_info`
+        <include refid="base_where_condition"/>
+        <include refid="order_by_sql"/>
+        LIMIT 1
+    </select>
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.String">
+        UPDATE `dz_info`
+        SET is_del = 1
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="deleteBatchByPrimaryKey" parameterType="java.util.List">
+        UPDATE `dz_info`
+        SET is_del = 1
+        WHERE
+        <if test="ids != null">
+            <foreach collection="ids" index="index" item="id" open=" id IN (" separator="," close=")">
+            #{id,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </update>
+</mapper>

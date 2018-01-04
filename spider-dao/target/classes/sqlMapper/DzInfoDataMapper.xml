@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spider.dao.DzInfoDataDAO">
+    <resultMap id="BaseResultMap" type="com.spider.DzInfoData">
+            <id column="id" property="id" jdbcType="INTEGER"/>
+            <result column="content" property="content" jdbcType="VARCHAR"/>
+            <result column="readpoint" property="readpoint" jdbcType="INTEGER"/>
+            <result column="groupids_view" property="groupidsView" jdbcType="VARCHAR"/>
+            <result column="paginationtype" property="paginationtype" jdbcType="INTEGER"/>
+            <result column="maxcharperpage" property="maxcharperpage" jdbcType="INTEGER"/>
+            <result column="template" property="template" jdbcType="VARCHAR"/>
+            <result column="paytype" property="paytype" jdbcType="INTEGER"/>
+            <result column="allow_comment" property="allowComment" jdbcType="INTEGER"/>
+            <result column="relation" property="relation" jdbcType="VARCHAR"/>
+            <result column="metaltype" property="metaltype" jdbcType="VARCHAR"/>
+            <result column="template_url" property="templateUrl" jdbcType="VARCHAR"/>
+            <result column="msgtype" property="msgtype" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+    id,content,readpoint,groupids_view,paginationtype,maxcharperpage,template,paytype,allow_comment,relation,metaltype,template_url,msgtype
+    </sql>
+
+    <sql id="order_by_sql">
+        <if test="orderColumn != null and orderSort != null">
+            ORDER BY ${orderColumn} ${orderSort}
+        </if>
+
+        <if test="orderColumn == null or orderSort == null">
+            ORDER BY id DESC
+        </if>
+    </sql>
+
+    <sql id="base_where_condition">
+        <where>
+            <if test="id != null and id != '' ">
+                AND id = #{id}
+            </if>
+            <if test="content != null and content != '' ">
+                AND content = #{content}
+            </if>
+            <if test="readpoint != null and readpoint != '' ">
+                AND readpoint = #{readpoint}
+            </if>
+            <if test="groupidsView != null and groupidsView != '' ">
+                AND groupids_view = #{groupidsView}
+            </if>
+            <if test="paginationtype != null and paginationtype != '' ">
+                AND paginationtype = #{paginationtype}
+            </if>
+            <if test="maxcharperpage != null and maxcharperpage != '' ">
+                AND maxcharperpage = #{maxcharperpage}
+            </if>
+            <if test="template != null and template != '' ">
+                AND template = #{template}
+            </if>
+            <if test="paytype != null and paytype != '' ">
+                AND paytype = #{paytype}
+            </if>
+            <if test="allowComment != null and allowComment != '' ">
+                AND allow_comment = #{allowComment}
+            </if>
+            <if test="relation != null and relation != '' ">
+                AND relation = #{relation}
+            </if>
+            <if test="metaltype != null and metaltype != '' ">
+                AND metaltype = #{metaltype}
+            </if>
+            <if test="templateUrl != null and templateUrl != '' ">
+                AND template_url = #{templateUrl}
+            </if>
+            <if test="msgtype != null and msgtype != '' ">
+                AND msgtype = #{msgtype}
+            </if>
+          <!--  <if test="isDel == null">
+                AND is_del = 0
+            </if>-->
+            <if test="ids != null">
+                <foreach collection="ids" index="index" item="id" open=" AND id IN (" separator="," close=")">
+                #{id,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="magicList != null">
+                <![CDATA[ AND  ${magicColumn}  in ]]>
+                <foreach collection="magicList" index="index" item="magicValue" open=" (" separator="," close=")">
+                #{magicValue}
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+
+    <insert id="insert" keyProperty="id"
+            parameterType="com.spider.DzInfoData">
+        INSERT INTO `dz_info_data` (id,content,readpoint,groupids_view,paginationtype,maxcharperpage,template,paytype,allow_comment,relation,metaltype,template_url,msgtype)
+        VALUES (#{id},
+                #{content},
+                #{readpoint},
+                #{groupidsView},
+                #{paginationtype},
+                #{maxcharperpage},
+                #{template},
+                #{paytype},
+                #{allowComment},
+                #{relation},
+                #{metaltype},
+                #{templateUrl},
+                #{msgtype}
+    )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO `dz_info_data` (id, content,readpoint,groupids_view,paginationtype,maxcharperpage,template,paytype,allow_comment,relation,metaltype,template_url,msgtype)
+        VALUES
+        <if test="list != null">
+            <foreach collection="list" item="item" index="index" separator=",">
+                (
+                    replace(uuid(), '-', ''),
+                    #{item.content},
+                    #{item.readpoint},
+                    #{item.groupidsView},
+                    #{item.paginationtype},
+                    #{item.maxcharperpage},
+                    #{item.template},
+                    #{item.paytype},
+                    #{item.allowComment},
+                    #{item.relation},
+                    #{item.metaltype},
+                    #{item.templateUrl},
+                    #{item.msgtype}
+                )
+            </foreach>
+        </if>
+    </insert>
+
+    <insert id="insertSelective" keyProperty="id"
+            parameterType="com.spider.DzInfoData">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT replace(uuid(),'-','') AS id
+        </selectKey>
+
+        INSERT INTO `dz_info_data`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            id,
+            <if test="content != null">
+            content,
+            </if>
+            <if test="readpoint != null">
+            readpoint,
+            </if>
+            <if test="groupidsView != null">
+            groupids_view,
+            </if>
+            <if test="paginationtype != null">
+            paginationtype,
+            </if>
+            <if test="maxcharperpage != null">
+            maxcharperpage,
+            </if>
+            <if test="template != null">
+            template,
+            </if>
+            <if test="paytype != null">
+            paytype,
+            </if>
+            <if test="allowComment != null">
+            allow_comment,
+            </if>
+            <if test="relation != null">
+            relation,
+            </if>
+            <if test="metaltype != null">
+            metaltype,
+            </if>
+            <if test="templateUrl != null">
+            template_url,
+            </if>
+            <if test="msgtype != null">
+            msgtype
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+        #{id,jdbcType=VARCHAR},
+            <if test="content != null">
+            #{content},
+            </if>
+            <if test="readpoint != null">
+            #{readpoint},
+            </if>
+            <if test="groupidsView != null">
+            #{groupidsView},
+            </if>
+            <if test="paginationtype != null">
+            #{paginationtype},
+            </if>
+            <if test="maxcharperpage != null">
+            #{maxcharperpage},
+            </if>
+            <if test="template != null">
+            #{template},
+            </if>
+            <if test="paytype != null">
+            #{paytype},
+            </if>
+            <if test="allowComment != null">
+            #{allowComment},
+            </if>
+            <if test="relation != null">
+            #{relation},
+            </if>
+            <if test="metaltype != null">
+            #{metaltype},
+            </if>
+            <if test="templateUrl != null">
+            #{templateUrl},
+            </if>
+            <if test="msgtype != null">
+            #{msgtype}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM `dz_info_data`
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectBatchByPrimaryKey" resultMap="BaseResultMap" parameterType="java.util.List">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM `dz_info_data`
+        <include refid="base_where_condition"/>
+    </select>
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.spider.DzInfoData">
+        UPDATE `dz_info_data`
+        <set>
+            <if test="content != null">
+            content = #{content},
+            </if>
+            <if test="readpoint != null">
+            readpoint = #{readpoint},
+            </if>
+            <if test="groupidsView != null">
+            groupids_view = #{groupidsView},
+            </if>
+            <if test="paginationtype != null">
+            paginationtype = #{paginationtype},
+            </if>
+            <if test="maxcharperpage != null">
+            maxcharperpage = #{maxcharperpage},
+            </if>
+            <if test="template != null">
+            template = #{template},
+            </if>
+            <if test="paytype != null">
+            paytype = #{paytype},
+            </if>
+            <if test="allowComment != null">
+            allow_comment = #{allowComment},
+            </if>
+            <if test="relation != null">
+            relation = #{relation},
+            </if>
+            <if test="metaltype != null">
+            metaltype = #{metaltype},
+            </if>
+            <if test="templateUrl != null">
+            template_url = #{templateUrl},
+            </if>
+            <if test="msgtype != null">
+            msgtype = #{msgtype}
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.spider.DzInfoData">
+        UPDATE `dz_info_data`
+        SET
+        content = #{content},
+        readpoint = #{readpoint},
+        groupids_view = #{groupidsView},
+        paginationtype = #{paginationtype},
+        maxcharperpage = #{maxcharperpage},
+        template = #{template},
+        paytype = #{paytype},
+        allow_comment = #{allowComment},
+        relation = #{relation},
+        metaltype = #{metaltype},
+        template_url = #{templateUrl},
+        msgtype = #{msgtype}
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByParams" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM `dz_info_data`
+        <include refid="base_where_condition"/>
+        <include refid="order_by_sql"/>
+        <if test="offset != null and size != null">
+            LIMIT #{offset}, #{size}
+        </if>
+    </select>
+
+    <select id="countByParams" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        SELECT
+        COUNT(DISTINCT id)
+        FROM `dz_info_data`
+        <include refid="base_where_condition"/>
+    </select>
+
+    <select id="selectFirstByParams" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        SELECT
+        <include refid="base_column_list"/>
+        FROM `dz_info_data`
+        <include refid="base_where_condition"/>
+        <include refid="order_by_sql"/>
+        LIMIT 1
+    </select>
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.String">
+        UPDATE `dz_info_data`
+        SET is_del = 1
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="deleteBatchByPrimaryKey" parameterType="java.util.List">
+        UPDATE `dz_info_data`
+        SET is_del = 1
+        WHERE
+        <if test="ids != null">
+            <foreach collection="ids" index="index" item="id" open=" id IN (" separator="," close=")">
+            #{id,jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </update>
+</mapper>

@@ -1,0 +1,7 @@
+com\spider\dao\MsgDao.class
+com\spider\dao\SpiderUrlDAO.class
+com\spider\dao\DzInfoDataDAO.class
+com\spider\dao\SpiderUrlPageDAO.class
+com\spider\dao\SpiderHostDAO.class
+com\spider\dao\DzInfoDAO.class
+com\spider\dao\BaseDAO.class

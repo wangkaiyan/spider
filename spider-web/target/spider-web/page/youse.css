@@ -1,0 +1,98 @@
+/**
+ * 关联页面：有色文章大模板内容页、价格汇总内容页
+ * @author zhangzheyi
+*/
+/*************************全局*************************/
+body {margin:0px;font-size:12px;font-family:'新宋体',Verdana; color:#545454;line-height:20px;}
+html,body {height:100%;}
+a{text-decoration:none; color:#545454;}
+a:hover {text-decoration:underline;color: #f00;}
+input{font-family:"宋体";}
+img{border:0}
+div,ul,li,h1,h2,h3,h4,p,dl,dt,dd,form{ margin:0; padding:0; list-style:none;text-align:left;}
+ul,li,ol { list-style:none;}
+.blue,a.blue{color:#00659c;}
+.orange,a.orange { color:#ff7500;}
+.red {color: #dd0c0c;}
+.red a {color: #dd0c0c;	text-decoration: none;}
+.red a:hover {color: #dd0c0c;	text-decoration: underline;}
+.vmiddle { vertical-align:middle;}
+.clear { clear: both; font-size: 1px; width: 1px; visibility: hidden; line-height: 1px; height: 1px; }
+.eFont { font-family:Verdana;}
+.noM {margin:0 !important;}
+.left{ float:left}
+.right{ float:right}
+
+/*************************头部*************************/
+#topBg{height:32px;line-height:32px; width:100%; overflow:hidden;background:url(http://a.mysteelcdn.com/ys/6.0/index/index.png) repeat-x left top;}
+#top{width:970px;margin:0 auto;height:32px;line-height:32px; padding-left:10px;}
+#top span {float:right; padding-right:10px;}
+#top form {margin-top:0!important; margin-top:2px;}
+#topbar{width:980px;margin:0 auto 0px;height:32px;line-height:32px;overflow:hidden; padding-bottom:2px; border-bottom:solid 1px #E5E5E5}
+#topbar a{ display:inline-block; line-height:32px; padding:0 7px;background:url(http://a.mysteelcdn.com/ys/6.0/index/index.png) repeat-x right -87px;}
+#topbar a.noBg{ background:none}
+#topWarp{ width:980px; height:86px; overflow:hidden; margin:0 auto}
+.logoLeft{ width:187px; height:86px; overflow:hidden; float:left}
+.headNav{ width:793px; height:86px; overflow:hidden; float:right;}
+.navBreed{ height:44px; overflow:hidden;  padding:7px 0 7px 0px}
+.navBreed li{line-height:22px;}
+.navBreed li a{padding:0 5px}
+.navBreed li a:hover{ color:#545454}
+.navBreed li a.red,.navBreed li a.red:hover{ color:#DE2022; font-weight:bold }
+.navB1{ width:288px; height:44px; overflow:hidden; background:url(http://a.mysteelcdn.com/ys/6.0/index/dashNav.png) no-repeat right 4px;float:left; padding-left:0px }
+.navB2{ width:108px; height:44px; overflow:hidden; background:url(http://a.mysteelcdn.com/ys/6.0/index/dashNav.png) no-repeat right 4px;float:left; padding-left:4px}
+.navB3{ width:144px; height:44px; overflow:hidden; background:url(http://a.mysteelcdn.com/ys/6.0/index/dashNav.png) no-repeat right 4px;float:left; padding-left:4px}
+.navB4{ width:121px; height:44px; overflow:hidden; background:url(http://a.mysteelcdn.com/ys/6.0/index/dashNav.png) no-repeat right 4px;float:left;padding-left:4px}
+.navB5{ width:108px; height:44px; overflow:hidden; float:left; padding-left:4px}
+.navChannel{ height:28px;line-height:28px;color:#545454; background:#F8F8F8}
+.navChannel a,.navChannel a:hover{ padding:0 6px;}
+#nav{width:980px; margin:0px auto 0px; height:36px; line-height:36px;color:#ffffff; background:url(http://a.mysteelcdn.com/ys/6.0/index/index.png) no-repeat left -32px;  font-size:14px}
+#nav a{color:#fff; padding:0 10px; background:url(http://a.mysteelcdn.com/ys/6.0/index/index.png) no-repeat right -122px; display:inline-block}
+#nav .hotline{ float:right; padding:0 5px; font-size:12px;}
+#nav .searchBox{ float:right; margin:8px 9px 0 0; width:180px; height:19px; border:solid 1px #AD0101; background:#fff; line-height:19px; font-size:12px; padding:0; position:relative; _margin:8px 0px 0 0; }
+.searchSelect{ float:left;width:37px; height:19px; overflow:hidden; border-right:solid 1px #D1D1D1;  background:url(http://a.mysteelcdn.com/ys/6.0/index/index.png) no-repeat right -68px;color:#545454; line-height:19px; padding:0 0px 0 6px; cursor:pointer}
+.searchInput{ float:left; width:109px; height:17px; overflow:hidden; border:0;border-right:solid 1px #AE0000; line-height:17px; color:#9C9C9C; padding-left:7px;width:107px\9; }
+.searchBtn{ float:right; width:19px; height:19px; overflow:hidden; border:0; cursor:pointer; background:url(http://a.mysteelcdn.com/ys/6.0/index/index.png) no-repeat -813px -68px}
+.searchSelectPop{ position:absolute; width:44px; line-height:20px; border:solid 1px #AE0000; top:19px; background: #FFF; left:-1px;font-size:12px; cursor:pointer; z-index:999;}
+.searchSelectPop li{padding-left:4px;color:#545454;}
+.searchSelectPop li:hover{ background:#CB1112; color:#FFF; padding-left:4px;}
+#cityNav{ width:960px; height:26px; line-height:26px; overflow:hidden; margin:0 auto 10px; padding:0 10px; background:#EFEFEF; color:#545454}
+#curTime{ float:right; color:#8C8C8C; font-family:Arial}
+/**************主体**************/
+#naver { width:958px; height:35px; line-height:35px;  margin:0px auto 7px; border:1px solid #ECECEC; padding:0 10px; clear:both; color:#535353; overflow:hidden;}
+#naver b{ color:#D62400}
+#searchBar { float:right; margin:5px 5px 0 0; height:25px; line-height:25px; overflow:hidden; }
+.naverAd { float:right; margin-right:10px; margin-top:2px;}
+.inputStyle {width:200px; color:#A1A1A1;}
+.searchBtnW60 { background:url(content.png) no-repeat -398px -172px; width:60px; height:20px; border:none; line-height:20px; cursor:pointer;}
+.content { width:980px; margin:auto; margin-top:5px;}
+#articleContent { border:1px solid #DDDEDE; padding:15px;}
+#articleContent h1 {font-size:24px; line-height:28px; font-weight:bold; margin:10px 0 5px; clear:both; text-align:center;}
+#articleContent h2 {font-size:16px;color:#010281; text-align:center; margin-bottom:5px;}
+#articleContent .info {line-height:20px; text-align:center; border-bottom:1px dashed #CCCCCC;}
+#articleContent .summary {text-align:justify; text-justify:inter-ideograph; background:#F7FCFF; margin:10px 0 0; padding:10px 5px; line-height:21px; font-size:14px; text-indent:2em; border:1px solid #dcdddd;}
+#articleContent .text {text-align:justify; text-justify:inter-ideograph; overflow:hidden; padding:8px 0; font-size:14px; clear:both; line-height:150%;word-wrap:break-word; word-break:break-all; width:948px; margin:auto;}
+#articleContent .text .nad { float:left; margin-right:5px;}
+#articleContent .text p { margin-top:10px; margin-bottom:0;}
+.content .box { border:1px solid #DDDEDE; margin-top:5px;}
+.content .box h1 { background:url(content.png?v=201009171437) repeat-x left -87px; font-size:14px; padding-left:10px; line-height:29px; height:29px; overflow:hidden;}
+.content .box h1 span {background:url(content.png?v=201009171437) no-repeat -549px -178px; padding-left:20px;}
+.content .nlist { padding:10px;}
+.content .nlist li { line-height:24px; font-size:14px; height:24px; overflow:hidden;}
+#relatedNews { float:left; width:375px;}
+#eSource { float:right; width:596px;}
+#ePromotion { padding:10px 10px; height:320px; overflow:hidden;}
+#ePromotion .eSearchBtn { background:url(content.png?v=201009171437) no-repeat left -170px; width:132px; height:23px; border:none; line-height:23px; cursor:pointer; color:#A50100; vertical-align:middle;}
+#ePromotion .inputStyle { line-height:18px; height:18px;vertical-align:middle;}
+#ePromotion .dec { color:#666666; line-height:25px;}
+#ePromotion .e {color:#FF0000; text-align:center; margin:10px; font-weight:bold;}
+#ePromotion .e a { color:#FF0000; }
+#ePromotion .eTitle { background:url(content.png?v=201009171437) repeat-x left -265px; height:24px; font-weight:bold; padding-left:20px; line-height:24px; clear:both; margin-top:10px;}
+#ePromotion .elist { margin:10px; height:120px; overflow:hidden; }
+#ePromotion .elist li { width:68px; float:left; font-size:12px; height:20px; line-height:20px;}
+#ePromotion .elist li a { color:#1F3A87;}
+#ePromotion .eCitylist { margin:10px;}
+#ePromotion .eCitylist li { width:40px; float:left; font-size:12px; height:20px; line-height:20px;}
+#ePromotion .eCitylist li a { color:#1F3A87;}
+/*************************尾部*************************/
+.foot{width:980px; margin:0px auto; border-top:2px solid #DE1E1E; text-align:center; font-family:Arial; padding:10px 0px; line-height:22px;}

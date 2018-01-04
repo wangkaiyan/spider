@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <mvc:annotation-driven />
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- Image Upload -->
+    <!--<bean id="imgServiceForApp" class="com.qding.framework.common.storage.qiniu.ImgServiceForAPPInPrivate">
+        <constructor-arg>
+            <value>${qding.conf.path}/qiniu.properties</value>
+        </constructor-arg>
+    </bean>
+
+    <bean id="imageUtils" class="com.qding.util.ImageUtils" />-->
+    <!-- END -->
+
+    <!-- 配置多请求数据类型，如json xml-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- set the max upload size10MB -->
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="maxUploadSize" value="10485760" />
+        <property name="maxInMemorySize" value="10240" />
+    </bean>
+
+    <!-- 静态资源访问 -->
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/page/" mapping="/page/**"/>
+    <mvc:resources location="/easyui/" mapping="/easyui/**"/>
+
+ <mvc:interceptors>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!--不拦截设置
+            <mvc:exclude-mapping path="/remote/*"/>-->
+            <mvc:exclude-mapping path="/js/*"/>
+            <bean class="com.spider.base.interceptor.TransforRequestBodyInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>

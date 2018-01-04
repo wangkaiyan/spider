@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+
+
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+<!-- 开启组件扫描 -->
+    <!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
+    <context:component-scan base-package="com.spider"/>
+
+    <bean id="dzInfoDataService" class="com.spider.service.impl.DzInfoDataServiceImpl">
+    </bean>
+
+
+
+    <bean id="dzInfoService" class="com.spider.service.impl.DzInfoServiceImpl">
+    </bean>
+
+
+    <!--A-->
+    <bean id="condition_A_0" class="com.spider.util.Condition">
+        <property name="rule" value="div#main>div#articleContent>div#text>div#text22222" />
+        <property name="match" value="true" />
+    </bean>
+    <bean id="condition_A_1" class="com.spider.util.Condition">
+        <property name="rule" value="div#main>div#articleContent>div#text>div#text22222>table#marketTable" />
+        <property name="match" value="true" />
+    </bean>
+    <!--B-->
+    <bean id="condition_B_0" class="com.spider.util.Condition">
+        <property name="rule" value="div#main>div#articleContent>div#text>div#text22222" />
+        <property name="match" value="false" />
+    </bean>
+    <bean id="condition_B_1" class="com.spider.util.Condition">
+        <property name="rule" value="div#main>div#articleContent>div#text>table#marketTable" />
+        <property name="match" value="true" />
+    </bean>
+    <!--C-->
+    <bean id="condition_C_0" class="com.spider.util.Condition">
+        <property name="rule" value="div#main>div#articleContent>div#text>div#text22222" />
+        <property name="match" value="false" />
+    </bean>
+    <bean id="condition_C_1" class="com.spider.util.Condition">
+        <property name="rule" value="div#main>div#articleContent>div#text>table#marketTable" />
+        <property name="match" value="false" />
+    </bean>
+
+
+
+    <bean id="templateType" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="A">
+                    <list>
+                        <ref bean="condition_A_0" />
+                        <ref bean="condition_A_1" />
+                    </list>
+                </entry>
+                <entry key="B">
+                    <list>
+                        <ref bean="condition_B_0" />
+                        <ref bean="condition_B_1" />
+                    </list>
+                </entry>
+                <entry  key="C">
+                    <list>
+                        <ref bean="condition_C_0" />
+                        <ref bean="condition_C_1" />
+                    </list>
+                </entry>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <!--http://jiancai.mysteel.com/m/16/0325/08/57A520E70E2B63DD.html-->
+    <bean id="templateA" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="first_article" value="div#main>div#articleContent>div#text>div#first_article"/>
+                <entry key="textContent" value="div#main>div#articleContent>div#text>div#text22222"/>
+                <entry key="title" value="div#main>div#articleContent>h1"/>
+                <entry key="root" value="div#main>div#articleContent>div#text"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <!--http://jiancai.mysteel.com/m/16/0325/11/13947CE4C4D08414.html-->
+    <!--去掉最后一个P-->
+    <bean id="templateB" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="first_article" value="div#main>div#articleContent>div#text>div#first_article"/>
+                <entry key="textContent_b" value="div#main>div#articleContent>div#text"/>
+                <entry key="title" value="div#main>div#articleContent>h1"/>
+                <entry key="root" value="div#main>div#articleContent>div#text"/>
+            </map>
+        </constructor-arg>
+    </bean>
+    <!--http://gc.mysteel.com/16/0330/17/7C0FC4C4557E467E.html-->
+    <bean id="templateC" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="first_article" value="div#main>div#articleContent>div#text>div#first_article"/>
+                <!--<entry key="textContent_c" value="div#main>div#articleContent>div#text"/>-->
+                <entry key="textContent_c" value="div#main>div#articleContent>div#text>p,div#main>div#articleContent>div#text>table"/>
+                <entry key="title" value="div#main>div#articleContent>h1"/>
+                <entry key="root" value="div#main>div#articleContent>div#text"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+
+
+    <bean id="templateManage" class="com.spider.util.TemplateManage">
+        <property name="template">
+            <map>
+                <entry key="A" value-ref="templateA" />
+                <entry key="B" value-ref="templateB" />
+                <entry key="C" value-ref="templateC" />
+            </map>
+        </property>
+        <property name="templateType">
+            <ref bean="templateType" />
+         <!--   <map>
+                <entry key="A" value="div#main>div#articleContent>div#text>div#text22222" />
+                <entry key="B" value="div#main>div#articleContent>div#text>div#text22222" />
+            </map>-->
+        </property>
+    </bean>
+
+
+
+
+
+    <bean id="jobPage"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <bean class="com.spider.job.GainPageUrlJob" />
+        </property>
+        <property name="targetMethod" value="initDoJob" />
+        <!--<property name="concurrent" value="false" />--><!-- 作业不并发调度 -->
+    </bean>
+
+
+    <bean id="jobUrl"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <bean class="com.spider.job.AnalyzeUrlWeb" />
+        </property>
+        <property name="targetMethod" value="initDoJob" />
+        <!--<property name="concurrent" value="false" />--><!-- 作业不并发调度 -->
+    </bean>
+
+
+    <bean id="jobLogin"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <bean class="com.spider.job.LoginUtil" />
+        </property>
+        <property name="targetMethod" value="refreshCookie" />
+    </bean>
+
+<!--    <bean id="simpleTriggerPage" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="jobPage" />
+        <property name="startDelay" value="0" />&lt;!&ndash; 调度工厂实例化后，经过0秒开始执行调度 &ndash;&gt;
+        <property name="repeatInterval" value="2000" />&lt;!&ndash; 每2秒调度一次 &ndash;&gt;
+    </bean>
+
+
+    <bean id="simpleTriggerUrl" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="jobUrl" />
+        <property name="startDelay" value="0" />&lt;!&ndash; 调度工厂实例化后，经过0秒开始执行调度 &ndash;&gt;
+        <property name="repeatInterval" value="4000" />&lt;!&ndash; 每2秒调度一次 &ndash;&gt;
+    </bean>-->
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="pageCronTrigger" />
+                <!--<ref bean="loginCronTrigger" />-->
+                <ref bean="urlCronTrigger" />
+            </list>
+        </property>
+    </bean>
+
+
+     <!--对应于作业继QuartzJobBean类的方式-->
+    <bean id="pageCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobPage" />
+        <!-- 每分钟的第0,10,20,30,40,50秒调度一次
+        <property name="cronExpression" value="0,10,20,30,40,50 * * * * ?" />
+        -->
+        <property name="cronExpression" value="0 0/3 * * * ?" />
+
+
+    </bean>
+
+    <!--对应于作业继QuartzJobBean类的方式-->
+    <bean id="urlCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobUrl" />
+        <!-- 每分钟的第0,10,20,30,40,50秒调度一次
+        <property name="cronExpression" value="0,10,20,30,40,50 * * * * ?" />
+        -->
+        <property name="cronExpression" value="0/10 * * * * ?" />
+
+
+    </bean>
+
+
+    <bean id="loginCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobLogin" />
+        <!-- 每分钟的第0,10,20,30,40,50秒调度一次
+        <property name="cronExpression" value="0,10,20,30,40,50 * * * * ?" />
+        -->
+        <property name="cronExpression" value="0 0/1 * * * ?" />
+
+
+    </bean>
+
+
+
+<!--    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <bean class="com.spider.LogTest" />-->
+
+
+</beans>

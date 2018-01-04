@@ -1,0 +1,9 @@
+com\spider\base\BaseModel.class
+com\spider\DzInfo.class
+com\spider\SpiderHost.class
+com\spider\SpiderUrl.class
+com\spider\DzInfoData.class
+com\spider\base\BaseModel4IdInt.class
+com\spider\SpiderUrlPage.class
+com\spider\Msg.class
+com\spider\base\AppUser.class

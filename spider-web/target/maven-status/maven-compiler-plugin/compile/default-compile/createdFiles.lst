@@ -1,0 +1,8 @@
+com\spider\LogTest2.class
+com\spider\base\controller\BaseController.class
+com\spider\base\controller\ResultPage.class
+com\spider\base\controller\ModelResult.class
+com\spider\base\interceptor\TransforRequestBodyInterceptor.class
+com\spider\base\controller\HttpSupport.class
+a.class
+com\spider\msg\MsgController.class
